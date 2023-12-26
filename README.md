@@ -54,7 +54,8 @@ dev_dependencies
 ## 레이아웃 구성하기
 
 ---
-[피그마 주소 추가하기]
+![와이어프레임](./lib/img/calendar_scheduler_frame.GIF)
+
 ---
 # 홈 스크린
 
