@@ -27,7 +27,7 @@ dependencies
 - drift: 2.1.0
 - splite3_flutter_libs:0.510
 - path_provider:2.0.11
-- path: 1.8.2
+- path: 1.8.3 -> 변경 
 - get_it : 7.2.0
 - dio : 4.0.6
 - provider : 6.0.3
