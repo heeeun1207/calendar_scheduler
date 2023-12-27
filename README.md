@@ -54,12 +54,12 @@ dev_dependencies
 ## 레이아웃 구성하기
 
 ---
-![와이어프레임](./lib/img/calendar_scheduler_frame.GIF)
-
----
 # 홈 스크린
-
+![와이어프레임1](./lib/img/calendar_scheduler_frame.GIF)
 홈스크린은 달력과 리스트로 2등분된 형태이다
+
+![와이어프레임2](./lib/img/ScheduleBottomSheet.GIF)
+일정시작과 종료시간을 지정하고 일정내용을 작성할 수 있는 텍스트 필드로 구성
 
 1. 달력에서 특정 날짜를 선택하면 날짜에 해당되는 달력 아래에
 2. 일정 리스트가 나타나도록 한다.
