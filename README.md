@@ -61,6 +61,9 @@ dev_dependencies
 ![와이어프레임2](./lib/img/ScheduleBottomSheet.GIF)
 <br>일정시작과 종료시간을 지정하고 일정내용을 작성할 수 있는 텍스트 필드로 구성
 
+![선택날짜 일정 구성](./lib/img/ScheduleCard.GIF)
+<br>시간(시작 시간부터 종료 시간)과 내용 영역으로 구성된 SeheduleCard 위젯 
+
 1. 달력에서 특정 날짜를 선택하면 날짜에 해당되는 달력 아래에
 2. 일정 리스트가 나타나도록 한다.
     - 일정은 시작 시간 기준으로 오름차순으로 정렬된다.
