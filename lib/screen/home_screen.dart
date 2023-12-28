@@ -1,7 +1,10 @@
 import 'package:calendar_scheduler/component/main_calendar.dart';
+import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
+import 'package:calendar_scheduler/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
+
 
 class HomeScreen extends StatefulWidget {
   //1. StatefulWidget 변경
@@ -21,6 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton( // 새 일정 버튼
+        backgroundColor: PRIMARY_COLOR,
+        onPressed: (){
+          showModalBottomSheet( // BottomSheet 열기
+              context: context,
+              isDismissible: true, // 배경을 탭했을 때  BottomSheet 닫기
+              builder: (_) => ScheduleBottomSheet(),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
