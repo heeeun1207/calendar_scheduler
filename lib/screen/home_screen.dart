@@ -1,6 +1,7 @@
 import 'package:calendar_scheduler/component/main_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
+import 'package:calendar_scheduler/component/today_banner.dart';
 
 class HomeScreen extends StatefulWidget {
   //1. StatefulWidget 변경
@@ -30,6 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
               // 날짜가 선택됐을 때 실행할 함수
               onDaySelected: onDaySelected,
             ),
+            SizedBox(height: 8.0),
+            TodayBanner( // 배너 추가하기
+                selectedDate: selectedDate,
+                count: 0 // 임시
+            ),
+            SizedBox(height: 8.0),
             ScheduleCard(
                 startTime: 12,
                 endTime: 14,
