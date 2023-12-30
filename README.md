@@ -117,6 +117,8 @@ dev_dependencies
 - SQL,SQLite
 - 드리프트 플러그인
 - Dismissible 위젯
+## 구현 목표 
+![wireframe](./lib/img/wireframe017.GIF)
 
 ## 구현하기
 
