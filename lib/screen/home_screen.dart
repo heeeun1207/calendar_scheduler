@@ -6,6 +6,7 @@ import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:get_it/get_it.dart';
 import 'package:calendar_scheduler/database/drift_database.dart';
+import 'package:calendar_scheduler/component/today_banner.dart';
 
 class HomeScreen extends StatefulWidget {
   // StatefulWidget 변경
@@ -54,9 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
               onDaySelected: onDaySelected,
             ),
             SizedBox(height: 8.0),
-            TodayBanner( // 배너 추가하기
-                selectedDate: selectedDate,
-                count: 0 // 임시
+            StreamBuilder<List<Schedule>>( // 일정 Stream 으로 받아오기
+              stream: GetIt.I<LocalDatabase>().watchSchedules(selectedDate),
+              builder: (context, snapshot) {
+                return TodayBanner(
+                    selectedDate: selectedDate,
+                    count: snapshot.data?.length ?? 0, // 일정 개수 입력해주기
+                );
+              },
             ),
             SizedBox(height: 8.0),
             Expanded( // 남는 공간을 모두 차지하기
