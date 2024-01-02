@@ -161,11 +161,13 @@ SQLite 도 데이터 저장소로서 훌륭한 역할을 하지만,<br>
 ## 사전 지식
 
 - 상태 관리
-- 캐시와 긍정적 응답
 
 ![StateManagement](./lib/img/StateManagement.GIF)
 
 플러터에서 BloC, GetX, 리버팟, 프로바이더 같은 상태 관리 플러그인이 있다.
+
+- 캐시와 긍정적 응답
+  ![StateManagement](./lib/img/OptimisticResponse.GIF)
 
 - 프로바이더를 사용할 예정이다
 
