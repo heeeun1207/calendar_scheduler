@@ -173,7 +173,8 @@ SQLite 도 데이터 저장소로서 훌륭한 역할을 하지만,<br>
 
 ## 사전 준비
 
-- Node.js
+- Node.js & NestJS
+![REST_API](./lib/img/RESTAPI.GIF)
 
 ## 구현하기
 
