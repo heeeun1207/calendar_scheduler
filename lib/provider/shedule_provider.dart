@@ -70,9 +70,13 @@ class ScheduleProvider extends ChangeNotifier {
 
     notifyListeners();
     }
-  }
 
-//8. deleteSchedule() 함수는 createSchedule() 함수와 마찬가지로 API 요청이 끝나면
-//cache 변수에서 삭제한 일정을 지워주는 작업을 한다.
+    void changeSelectedDate({
+    required DateTime date,
+}) {
+    selectedDate =date; // 현재 선택된 날짜를 매개변수로 입력받은 날짜로 변경
+      notifyListeners();
+    }
+  }
 
 
