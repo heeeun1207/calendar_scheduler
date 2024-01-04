@@ -55,7 +55,24 @@ class ScheduleProvider extends ChangeNotifier {
 
     notifyListeners();
     }
+
+    void deleteSchedule({
+      required DateTime date,
+      required String id,
+}) async {
+    final resp = await repository.deleteSchedule(id: id);
+
+    cache.update( // 8. 캐시에서 데이터 삭제
+        date,
+            (value) => value.where((e) => e.id != id).toList(),
+    ifAbsent: () => [],
+    );
+
+    notifyListeners();
+    }
   }
 
-  // 6.새로운 일정을 생성하는 날짜에 해당되는 value에 새로운 일정을 추가
-  // 그리고 모든 일정을 시작시간 기준으로 오름차순 정렬한다.
+//8. deleteSchedule() 함수는 createSchedule() 함수와 마찬가지로 API 요청이 끝나면
+//cache 변수에서 삭제한 일정을 지워주는 작업을 한다.
+
+
