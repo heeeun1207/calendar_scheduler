@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 
 class ScheduleRepository {
   final _dio = Dio();
-  final _targetUrl = 'http://${Platform.isAndroid ? '10.0.2.2' : 'localhost'} : 3000/schedule';
+  final _targetUrl = 'http://${Platform.isAndroid ? '10.0.2.2' : 'localhost'}:3000/schedule';
   // 안드로이드에서는 10.0.2.2 가 localhost에 해당함
 
   Future<List<ScheduleModel>> getSchedules({
@@ -28,5 +28,16 @@ class ScheduleRepository {
     )
         .toList();
   }
+
+  Future<String> createSchedule({
+    required ScheduleModel schedule,
+}) async {
+    final json = schedule.toJson(); // JSON으로 변환
+
+    final resp = await _dio.post(_targetUrl, data: json);
+
+    return resp.data?['id'];
+  }
 }
+
 
