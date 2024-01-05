@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget{
           showModalBottomSheet(
             context: context,
             isDismissible: true,
-            builder: (_) => ScheduleBottomSheet(),
+            builder: (_) => ScheduleBottomSheet(selectedDate: selectedDate),
             isScrollControlled: true,
           );
         },
@@ -40,7 +40,9 @@ class HomeScreen extends StatelessWidget{
           children: [
             MainCalendar(
               selectedDate: selectedDate,
-              onDaySelected: onDaySelected, // 선택된 날짜 변경시 콜백
+
+              onDaySelected: (selectedDate, focusedDate) =>
+              onDaySelected(selectedDate, focusedDate, context), // 선택된 날짜 변경시 콜백
             ),
             SizedBox(height: 8.0),
             TodayBanner(
@@ -79,8 +81,16 @@ class HomeScreen extends StatelessWidget{
   }
 
   // 날짜 선택시 실행할 콜백 함수
-  void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
-    // 실행할 코드 작성
+  void onDaySelected(
+      DateTime selectedDate, 
+      DateTime focusedDate,
+      BuildContext context,
+      ) {
+    final provider = context.read<ScheduleProvider>();
+    provider.changeSelectedDate(
+        date: selectedDate,
+    );
+    provider.getSchedules(date: selectedDate);
   }
 }
 
