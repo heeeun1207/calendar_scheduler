@@ -5,61 +5,72 @@ import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 
+import 'package:provider/provider.dart'; // 1. Provider 불러오기
+import 'package:calendar_scheduler/provider/shedule_provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  //1. StatefulWidget 변경
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  DateTime selectedDate = DateTime.utc( // 2.선택된 날짜를 관리할 변수
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
+class HomeScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    // 2. 프로바이더 변경이 있을 때마다 build() 함수 재실행
+    final provider = context.watch<ScheduleProvider>();
+
+    // 3. 선택된 날짜 가져오기
+    final selectedDate = provider.selectedDate;
+
+    // 4. 선택된 날짜에 해당하는 일정들 가져오기
+    final schedules = provider.cache[selectedDate] ?? [];
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton( // 새 일정 버튼
+      floatingActionButton: FloatingActionButton(
         backgroundColor: PRIMARY_COLOR,
         onPressed: (){
-          showModalBottomSheet( // BottomSheet 열기
-              context: context,
-              isDismissible: true, // 배경을 탭했을 때  BottomSheet 닫기
-              builder: (_) => ScheduleBottomSheet(),
-            // BottomSheet 높이를 화면 최대 높이로
-            // 정의하고 스크롤 가능하게 변경해준다.
+          showModalBottomSheet(
+            context: context,
+            isDismissible: true,
+            builder: (_) => ScheduleBottomSheet(),
             isScrollControlled: true,
           );
         },
-        child: Icon(
-          Icons.add,
-        ),
+        child: Icon(Icons.add),
       ),
       body: SafeArea(
         child: Column(
           children: [
             MainCalendar(
-              // 선택된 날짜를 MainCalendar에 전달
               selectedDate: selectedDate,
-
-              // 날짜가 선택됐을 때 실행할 함수
-              onDaySelected: onDaySelected,
+              onDaySelected: onDaySelected, // 선택된 날짜 변경시 콜백
             ),
             SizedBox(height: 8.0),
-            TodayBanner( // 배너 추가하기
-                selectedDate: selectedDate,
-                count: 0 // 임시
+            TodayBanner(
+              selectedDate: selectedDate,
+              count: schedules.length, // 해당 날짜의 일정 개수 표시
             ),
             SizedBox(height: 8.0),
-            ScheduleCard(
-                startTime: 12,
-                endTime: 14,
-                content: '프로그래밍 공부',
+            Expanded( // 수정된 Expanded
+              child: ListView.builder(
+                itemCount: schedules.length,
+                itemBuilder: (context, index){
+                  final schedule = schedules[index];
+                  return Dismissible(
+                    key: ObjectKey(schedule.id),
+                    direction: DismissDirection.startToEnd,
+                    onDismissed: (DismissDirection direction){
+                      provider.deleteSchedule(date: selectedDate, id: schedule.id);
+                      // 1
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                      child: ScheduleCard(
+                        startTime: schedule.startTime,
+                        endTime: schedule.endTime,
+                        content: schedule.content,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -67,11 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 3.날짜가 선택됐을 때 실행되는 함수
+  // 날짜 선택시 실행할 콜백 함수
   void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
-    // 선택된 날짜 업데이트
-    setState(() {
-      this.selectedDate = selectedDate;
-    });
+    // 실행할 코드 작성
   }
 }
+
+

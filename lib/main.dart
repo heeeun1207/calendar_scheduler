@@ -1,6 +1,5 @@
 import 'package:calendar_scheduler/screen/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:calendar_scheduler/provider/shedule_provider.dart';
 import 'package:calendar_scheduler/repository/schedule_repository.dart';
