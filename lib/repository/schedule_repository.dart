@@ -33,4 +33,14 @@ class ScheduleRepository {
     )
         .toList();
   }
+  Future<String> createSchedule({
+    required ScheduleModel schedule,
+}) async {
+    final json = schedule.toJson(); // JSON 으로 변환
+
+    final resp = await _dio.post(_targetUrl, data: json);
+
+    return resp.data?['id'];
+  }
 }
+
