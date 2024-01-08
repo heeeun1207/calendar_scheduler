@@ -7,15 +7,9 @@ import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:get_it/get_it.dart';
 import 'package:calendar_scheduler/database/drift_database.dart';
 
-class HomeScreen extends StatefulWidget {
-  // StatefulWidget 변경
-  const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget{
   DateTime selectedDate = DateTime.utc( // 선택된 날짜를 관리할 변수
     DateTime.now().year,
     DateTime.now().month,
@@ -112,9 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // 날짜가 선택됐을 때 실행되는 함수
   void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
-    // 선택된 날짜 업데이트
-    setState(() {
-      this.selectedDate = selectedDate;
+  // StatelessWidget 바꾼 후 setState 로직 모두 삭제
     });
   }
 }
