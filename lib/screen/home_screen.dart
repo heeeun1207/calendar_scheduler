@@ -7,6 +7,9 @@ import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:get_it/get_it.dart';
 import 'package:calendar_scheduler/database/drift_database.dart';
 
+// Provider 불러오기
+import 'package:provider/provider.dart';
+import 'package:calendar_scheduler/provider/schedule_provider.dart';
 
 
 class HomeScreen extends StatelessWidget{
@@ -18,6 +21,16 @@ class HomeScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    // 프로바이더 변경이 있을 때마다 build() 함수 재실행
+    final provider = context.watch<ScheduleProvider>();
+
+    // 선택된 날짜 가져오기
+    final selectedDate = provider.selectedDate;
+
+    // 선택된 날짜에 해당되는 일정 가져오기
+    final schedules = provider.cache[selectedDate] ?? [];
+
     return Scaffold(
       floatingActionButton: FloatingActionButton( // 새 일정 버튼
         backgroundColor: PRIMARY_COLOR,
