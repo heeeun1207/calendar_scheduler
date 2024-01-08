@@ -71,6 +71,14 @@ void getSchedules({
 
   notifyListeners();
   }
+
+  void changeSelectedDate({
+    required DateTime date,
+}) {
+  //단순히 매개변수로 입력받은 날짜 변수로 selectedDate 변수를 대체하는 코드를 작성하면 끝
+  selectedDate = date; // 현재 선택된 날짜를 매개변수로 입력받은 날짜로 변경
+    notifyListeners();
+  }
 }
 
 
