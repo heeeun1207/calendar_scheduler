@@ -56,6 +56,21 @@ void getSchedules({
 
   notifyListeners();
   }
+
+  void deleteSchedule({
+    required DateTime date,
+    required String id,
+}) async {
+  final resp = await repository.deleteSchedule(id: id);
+
+  cache.update( // 캐시에서 데이터 삭제
+      date,
+          (value) => value.where((e) => e.id != id).toList(),
+  ifAbsent: () => [],
+  );
+
+  notifyListeners();
+  }
 }
 
 
