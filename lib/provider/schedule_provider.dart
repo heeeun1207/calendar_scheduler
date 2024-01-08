@@ -19,4 +19,16 @@ ScheduleProvider({
 }) : super() {
   getSchedules(date: selectedDate);
 }
+
+void getSchedules({
+    required DateTime date,
+}) async {
+  final resp = await repository.getSchedules(date: date); // GET 메서드 보내기
+
+  // 선택한 날짜의 일정들 업데이트하기
+  cache.update(date, (value) => resp, ifAbsent: () => resp);
+
+  notifyListeners(); // 리슨하는 위젯들 업데이트하기
+  }
 }
+
