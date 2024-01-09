@@ -50,7 +50,8 @@ class HomeScreen extends StatelessWidget{
               selectedDate: selectedDate,
 
               // 날짜가 선택됐을 때 실행할 함수
-              onDaySelected: onDaySelected,
+              onDaySelected: (selectedDate, focusedDate) =>
+                onDaySelected(selectedDate, focusedDate, context),
             ),
             SizedBox(height: 8.0),
             TodayBanner(
@@ -91,7 +92,17 @@ class HomeScreen extends StatelessWidget{
   }
 
   // 날짜가 선택됐을 때 실행되는 함수
-  void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
-  // StatelessWidget 바꾼 후 setState 로직 모두 삭제
+  void onDaySelected(
+      DateTime selectedDate,
+      DateTime focusedDate,
+      BuildContext context,
+      ) {
+    final provider = context.read<ScheduleProvider>();
+    provider.changeSelectedDate(
+        date: selectedDate,
+    );
+    provider.getSchedules(date: selectedDate);
   }
 }
+
+
