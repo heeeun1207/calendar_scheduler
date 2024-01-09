@@ -1,5 +1,6 @@
 import 'package:calendar_scheduler/model/schedule_model.dart';
 import 'package:calendar_scheduler/repository/schedule_repository.dart';
+//import 'package:drift/drift.dart';
 
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
@@ -92,9 +93,48 @@ class ScheduleProvider extends ChangeNotifier {
             (value) => value.where((e) => e.id != tempId).toList(),
       );
     }
-
-    notifyListeners();
   }
-}
 
-  
+  void deleteSchedule({
+    required DateTime date,
+    required String id,
+  }) async {
+    final targetSchedule = cache[date]!.firstWhere(
+          (e) => e.id == id,
+    ); // 삭제할 일정 기억
+
+    cache.update( // 캐시에서 데이터 삭제
+      date,
+          (value) => value.where((e) => e.id != id).toList(),
+      ifAbsent: () => [],
+    ); // 긍정적 응답 (응답 전에 캐시 먼저 업데이트)
+
+    notifyListeners(); // 캐시 업데이트 반영하기
+
+    try {
+      await repository.deleteSchedule(id: id); // 삭제 함수 실행
+    } catch (e) {
+      // 삭제 실패 시 캐시 롤백하기
+      cache.update(
+        date,
+            (value) =>
+        [...value, targetSchedule]
+          ..sort(
+                (a, b) =>
+                a.startTime.compareTo(
+                  b.startTime,
+                ),
+          ),
+      );
+      notifyListeners();
+    }
+  }
+    void changeSelectedDate({
+      required DateTime date,
+    }) {
+      //단순히 매개변수로 입력받은 날짜 변수로 selectedDate 변수를 대체하는 코드를 작성하면 끝
+      selectedDate = date; // 현재 선택된 날짜를 매개변수로 입력받은 날짜로 변경
+      notifyListeners();
+    }
+  }
+
